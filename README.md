@@ -31,25 +31,3 @@ Model berhasil melampaui batas minimum akurasi 85% dengan hasil evaluasi pada *T
 
 ## Struktur Direktori Submission
 Model yang telah dilatih diekspor ke dalam tiga format berbeda (SavedModel, TF-Lite, dan TFJS) agar siap di-*deploy* ke berbagai *platform*. Berikut adalah struktur folder proyek ini:
-
-```text
-submission/
-├───tfjs_model/                 # Model dalam format TensorFlow.js untuk web
-│   ├───group1-shard1of6.bin
-│   ├───group1-shard2of6.bin
-│   ├───group1-shard3of6.bin
-│   ├───group1-shard4of6.bin
-│   ├───group1-shard5of6.bin
-│   ├───group1-shard6of6.bin
-│   └───model.json
-├───tflite/                     # Model dalam format TensorFlow Lite untuk mobile
-│   ├───model.tflite
-│   └───label.txt
-├───saved_model/                # Model standar format Keras/TensorFlow
-│   ├───fingerprint.pb
-│   ├───saved_model.pb
-│   ├───assets
-│   └───variables/
-├───Template_Submission_Akhir.ipynb              # File utama Jupyter Notebook yang berisi kode lengkap
-├───README.md                   # Dokumentasi proyek
-└───requirements.txt            # Daftar library Python yang digunakan
