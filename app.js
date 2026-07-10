@@ -24,6 +24,9 @@
   const resultClass = $('result-class');
   const resultConfidence = $('result-confidence');
   const resultDescription = $('result-description');
+  const infoBtn = $('info-btn'), infoLabel = $('info-label');
+  const modalOverlay = $('modal-overlay');
+  const modalClose = $('modal-close');
 
   let model = null;
 
@@ -93,6 +96,16 @@
     classifyBtn.disabled = false;
   }
 
+  // Modal
+  const openModal = () => { modalOverlay.hidden = false; };
+  infoBtn.onclick = openModal;
+  if (infoLabel) infoLabel.onclick = openModal;
+  modalClose.onclick = () => { modalOverlay.hidden = true; };
+  modalOverlay.onclick = (e) => {
+    if (e.target === modalOverlay) modalOverlay.hidden = true;
+  };
+
+  // Upload events
   dropZone.onclick = () => fileInput.click();
   fileInput.onchange = e => { if (e.target.files[0]) onFile(e.target.files[0]); };
   dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };

@@ -15,6 +15,11 @@
     <h1>Klasifikasi Penyakit Tanaman <span class="accent">Kentang</span></h1>
     <p class="subtitle">Unggah gambar daun tanaman kentang untuk mendeteksi penyakit</p>
 
+    <div class="info-container">
+      <button id="info-btn" class="btn btn-info" type="button">i</button>
+      <span id="info-label" class="info-label">Informasi penyakit</span>
+    </div>
+
     <div id="drop-zone" class="drop-zone">
       <img id="preview" class="preview-img" alt="Preview">
       <div id="drop-text" class="drop-text">
@@ -27,12 +32,6 @@
     <button id="classify-btn" class="btn btn-primary" disabled>Proses</button>
     <div id="status" class="status">Tunggu sebentar ya, lagi memuat model</div>
 
-    <div class="labels">
-      <span class="label label-amber">Bercak Daun Awal</span>
-      <span class="label label-red">Hawar Daun Lanjut</span>
-      <span class="label label-green">Sehat</span>
-    </div>
-
     <div id="results" class="results" hidden>
       <div class="results-divider"></div>
       <h2 class="results-title">Hasil Klasifikasi</h2>
@@ -44,6 +43,32 @@
     <footer>
       Created by <a href="https://github.com/hairulanaam/" target="_blank">Hairul Anam</a>
     </footer>
+  </div>
+
+  <div id="modal-overlay" class="modal-overlay" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2>Jenis Klasifikasi Penyakit</h2>
+        <button id="modal-close" class="modal-close" type="button">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="disease-card">
+          <h3>Early Blight (Bercak Daun Awal)</h3>
+          <img src="./assets/potato-early-blight.jpg" alt="Contoh Early Blight" class="disease-img">
+          <p>Penyakit Early Blight disebabkan oleh jamur Alternaria solani. Ciri-cirinya adalah munculnya bercak-bercak cokelat gelap berbentuk lingkaran konsentris (seperti papan target) pada daun bagian bawah tanaman yang lebih tua. Bercak biasanya dikelilingi oleh area kuning (klorosis). Jika tidak ditangani, daun akan menguning, mengering, dan rontok sehingga mengurangi hasil panen.</p>
+        </div>
+        <div class="disease-card">
+          <h3>Late Blight (Hawar Daun Lanjut)</h3>
+          <img src="./assets/potato-late-blight.jpg" alt="Contoh Late Blight" class="disease-img">
+          <p>Penyakit Late Blight disebabkan oleh oomycete Phytophthora infestans. Ciri-cirinya adalah munculnya bercak besar berwarna hijau gelap hingga cokelat kehitaman yang tampak basah (water-soaked) pada daun, batang, dan umbi. Pada kondisi lembap, sering terlihat pertumbuhan jamur putih seperti kapas di bagian bawah daun. Penyakit ini sangat agresif dan dapat menghancurkan seluruh tanaman dalam waktu singkat.</p>
+        </div>
+        <div class="disease-card">
+          <h3>Healthy (Sehat)</h3>
+          <img src="./assets/potato-healthy.jfif" alt="Contoh Daun Sehat" class="disease-img">
+          <p>Daun tanaman kentang dalam kondisi sehat. Daun berwarna hijau cerah hingga hijau tua secara merata, tidak terdapat bercak, perubahan warna, atau tanda-tanda serangan patogen. Struktur daun utuh, permukaan daun bersih, dan tanaman menunjukkan pertumbuhan yang normal dan vigor.</p>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js"></script>
