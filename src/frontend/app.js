@@ -1,5 +1,5 @@
 (() => {
-  const MODEL_URL = './tfjs_model/model.json';
+  const MODEL_URL = '../models/tfjs_model/model.json';
   const SIZE = 150;
   const CLASSES = [
     { name: 'Bercak Daun Awal', fill: 'fill-amber' },
