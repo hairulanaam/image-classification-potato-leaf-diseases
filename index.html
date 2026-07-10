@@ -6,64 +6,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Klasifikasi Penyakit Tanaman Kentang</title>
   <meta name="description" content="Klasifikasi Penyakit Tanaman Kentang Menggunakan Neural Network">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <div class="wrapper">
-    <header>
-      <h1>Klasifikasi Penyakit Tanaman <span class="accent">Kentang</span></h1>
-      <p class="subtitle">Deteksi Penyakit Pada Daun Tanaman Kentang</p>
-    </header>
+  <div class="card">
+    <h1>Klasifikasi Penyakit Tanaman <span class="accent">Kentang</span></h1>
+    <p class="subtitle">Unggah gambar daun tanaman kentang untuk mendeteksi penyakit</p>
 
-    <div class="panels">
-      <!-- Left: Upload -->
-      <div class="panel panel-left">
-        <h2 class="panel-title">Upload Gambar</h2>
-        <div id="drop-zone" class="drop-zone">
-          <p>Drag & drop atau klik untuk upload</p>
-          <small>JPG, PNG, JPEG</small>
-          <input type="file" id="file-input" accept="image/*" hidden>
-        </div>
-        <div id="preview-area" class="preview-area" hidden>
-          <img id="preview" class="preview-img" alt="Preview">
-          <div class="actions">
-            <button id="classify-btn" class="btn btn-primary" disabled>Klasifikasi</button>
-            <button id="reset-btn" class="btn btn-outline">Reset</button>
-          </div>
-        </div>
-        <div id="status" class="status">Tunggu Sebentar Ya, Lagi Memuat Model</div>
+    <div id="drop-zone" class="drop-zone">
+      <img id="preview" class="preview-img" alt="Preview">
+      <div id="drop-text" class="drop-text">
+        <p>Drag & drop atau klik untuk upload</p>
+        <small>JPG, PNG, JPEG</small>
       </div>
+      <input type="file" id="file-input" accept="image/*" hidden>
+    </div>
 
-      <!-- Right: Results (always visible) -->
-      <div class="panel panel-right">
-        <h2 class="panel-title">Hasil Analisis</h2>
-        <div id="results-area">
-          <div class="result-item placeholder">
-            <div style="flex:1">
-              <div class="result-name">Bercak Daun Awal</div>
-              <div class="bar"><div class="bar-fill fill-amber"></div></div>
-            </div>
-            <span class="result-pct">--%</span>
-          </div>
-          <div class="result-item placeholder">
-            <div style="flex:1">
-              <div class="result-name">Hawar Daun Lanjut</div>
-              <div class="bar"><div class="bar-fill fill-red"></div></div>
-            </div>
-            <span class="result-pct">--%</span>
-          </div>
-          <div class="result-item placeholder">
-            <div style="flex:1">
-              <div class="result-name">Sehat</div>
-              <div class="bar"><div class="bar-fill fill-green"></div></div>
-            </div>
-            <span class="result-pct">--%</span>
-          </div>
-        </div>
-        <p id="results-hint" class="hint">Upload gambar terlebih dahulu untuk melihat hasil klasifikasi</p>
-      </div>
+    <button id="classify-btn" class="btn btn-primary" disabled>Proses</button>
+    <div id="status" class="status">Tunggu sebentar ya, lagi memuat model</div>
+
+    <div class="labels">
+      <span class="label label-amber">Bercak Daun Awal</span>
+      <span class="label label-red">Hawar Daun Lanjut</span>
+      <span class="label label-green">Sehat</span>
+    </div>
+
+    <div id="results" class="results" hidden>
+      <div class="results-divider"></div>
+      <h2 class="results-title">Hasil Klasifikasi</h2>
+      <div id="result-class" class="result-class"></div>
+      <div id="result-confidence" class="result-confidence"></div>
+      <p id="result-description" class="result-description"></p>
     </div>
 
     <footer>
