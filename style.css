@@ -237,6 +237,7 @@ h1 {
 }
 .modal-close:hover { background: #e5e7eb; color: #1a2e1a; }
 
+.dataset-link { padding-top: 1.25rem; padding-bottom: 0; padding-left: 1.5rem; padding-right: 1.5rem; }
 .modal-body { padding: 1.25rem 1.5rem; }
 
 .disease-card {

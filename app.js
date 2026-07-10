@@ -1,5 +1,6 @@
 (() => {
   const MODEL_URL = './tfjs_model/model.json';
+  const MODEL_CACHE_URL = 'indexeddb://potato-disease-model-v1';
   const SIZE = 150;
   const CLASSES = [
     {
@@ -29,19 +30,42 @@
   const modalClose = $('modal-close');
 
   let model = null;
+  let modelLoadPromise = null;
+
+  async function loadModelOnce() {
+    if (model) return model;
+    if (modelLoadPromise) return modelLoadPromise;
+
+    modelLoadPromise = (async () => {
+    try {
+        return await tf.loadGraphModel(MODEL_CACHE_URL);
+      } catch (cachedError) {
+        try {
+          const loadedModel = await tf.loadGraphModel(MODEL_URL);
+          try {
+            await loadedModel.save(MODEL_CACHE_URL);
+          } catch (saveError) {
+            console.warn('Gagal menyimpan model ke cache browser:', saveError);
+          }
+          return loadedModel;
+        } catch (networkError) {
+          throw networkError;
+        }
+      }
+    })();
+
+    try {
+      model = await modelLoadPromise;
+      return model;
+    } finally {
+      modelLoadPromise = null;
+    }
+  }
 
   async function init() {
-    try {
-      model = await tf.loadGraphModel(MODEL_URL);
-      tf.tidy(() => model.predict(tf.zeros([1, SIZE, SIZE, 3]))).dispose();
-      status.textContent = 'Model siap';
-      status.className = 'status ready';
-      classifyBtn.disabled = false;
-    } catch (e) {
-      status.textContent = 'Gagal memuat model';
-      status.className = 'status error';
-      console.error(e);
-    }
+    status.textContent = 'Silahkan pilih gambar untuk klasifikasi';
+    status.className = 'status ready';
+    classifyBtn.disabled = false;
   }
 
   function onFile(file) {
@@ -56,14 +80,24 @@
   }
 
   async function classify() {
-    if (!model || !preview.src) return;
+    if (!preview.src) {
+      status.textContent = 'Gambar masih kosong. Silakan pilih gambar terlebih dahulu';
+      status.className = 'status error';
+      return;
+    }
+
     classifyBtn.disabled = true;
-    status.textContent = 'Proses menganalisa...';
+    status.textContent = model ? 'Proses menganalisa...' : 'Memuat model...';
     status.className = 'status';
 
     await new Promise(r => setTimeout(r, 50));
 
     try {
+      if (!model) {
+        model = await loadModelOnce();
+        tf.tidy(() => model.predict(tf.zeros([1, SIZE, SIZE, 3]))).dispose();
+      }
+
       const probs = tf.tidy(() => {
         const t = tf.browser.fromPixels(preview)
           .resizeBilinear([SIZE, SIZE]).toFloat().div(255).expandDims(0);
