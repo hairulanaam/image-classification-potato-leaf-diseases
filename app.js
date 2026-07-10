@@ -1,6 +1,5 @@
 (() => {
   const MODEL_URL = './tfjs_model/model.json';
-  const CACHE_KEY = 'indexeddb://potato-disease-model';
   const SIZE = 150;
   const CLASSES = [
     {
@@ -33,15 +32,7 @@
 
   async function init() {
     try {
-      try {
-        model = await tf.loadGraphModel(CACHE_KEY);
-        console.log('[Cache] Model dimuat dari IndexedDB');
-      } catch (_) {
-        status.textContent = 'Mengunduh model';
-        model = await tf.loadGraphModel(MODEL_URL);
-        await model.save(CACHE_KEY);
-        console.log('[Cache] Model disimpan ke IndexedDB');
-      }
+      model = await tf.loadGraphModel(MODEL_URL);
       tf.tidy(() => model.predict(tf.zeros([1, SIZE, SIZE, 3]))).dispose();
       status.textContent = 'Model siap';
       status.className = 'status ready';
