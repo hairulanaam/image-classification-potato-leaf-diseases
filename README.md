@@ -1,13 +1,13 @@
-# Proyek Klasifikasi Gambar: Penyakit Tanaman Kentang
+# Proyek Klasifikasi Gambar: Tanaman Kentang Penyakit (Early/Late Blight) dan Sehat
 
 ## Deskripsi Proyek
-Proyek ini merupakan model *Machine Learning* berbasis *Convolutional Neural Network* (CNN) yang dibangun untuk mengklasifikasikan kondisi daun tanaman kentang. Model ini dilatih untuk mengenali tiga kondisi berbeda pada daun kentang berdasarkan citra visual, sehingga dapat membantu dalam deteksi dini penyakit tanaman.
+Proyek ini merupakan model *Machine Learning* berbasis *Convolutional Neural Network* (CNN) yang dibangun untuk mengklasifikasikan kondisi daun tanaman kentang. Model ini dilatih untuk mengenali tiga kondisi berbeda pada daun kentang berdasarkan citra visual, sehingga dapat membantu dalam deteksi dini kondisi tanaman kentang.
 
 ## Dataset
 Dataset yang digunakan diambil dari [New Plant Diseases Dataset](https://www.kaggle.com/datasets/vipoooool/new-plant-diseases-dataset) di Kaggle. Dari dataset asli yang sangat besar, proyek ini memfilter dan hanya menggunakan bagian tanaman kentang (*Potato*), yang terdiri dari lebih dari 7.000 gambar yang terbagi secara seimbang ke dalam 3 kelas:
-1. `Potato___Early_blight` (Bercak daun awal)
-2. `Potato___Late_blight` (Hawar daun lanjut)
-3. `Potato___healthy` (Daun sehat)
+1. Early Blight
+2. Late Blight
+3. Healthy
 
 Dataset dibagi menjadi tiga bagian menggunakan rasio: **80% Data Latih (Train)**, **10% Data Validasi (Validation)**, dan **10% Data Uji (Test)**. 
 
@@ -24,10 +24,4 @@ Model dibangun secara runtun menggunakan Keras `Sequential` API dengan detail la
 * **Output Layer:** `Dense` layer dengan 3 neuron menggunakan aktivasi `softmax` untuk menghasilkan probabilitas klasifikasi multikelas.
 
 ## Hasil Evaluasi (Performa Model)
-Model berhasil melampaui batas minimum akurasi 85% dengan hasil evaluasi pada *Test Set* sebagai berikut:
-* **Training Accuracy:** ~97%
-* **Validation Accuracy:** ~91%
-* **Testing Accuracy:** ~90.20%
-
-## Struktur Direktori Submission
-Model yang telah dilatih diekspor ke dalam tiga format berbeda (SavedModel, TF-Lite, dan TFJS) agar siap di-*deploy* ke berbagai *platform*. Berikut adalah struktur folder proyek ini:
+Model berhasil mendapatkan tingkat akurasi sebesar 90% menggunakan data uji (test)
