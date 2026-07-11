@@ -4,12 +4,12 @@
   const SIZE = 150;
   const CLASSES = [
     {
-      name: 'Bercak Daun Awal',
-      description: 'Penyakit Early Blight disebabkan oleh jamur Alternaria solani. Ciri-cirinya adalah munculnya bercak-bercak cokelat gelap berbentuk lingkaran konsentris (seperti papan target) pada daun bagian bawah tanaman yang lebih tua. Bercak biasanya dikelilingi oleh area kuning (klorosis). Jika tidak ditangani, daun akan menguning, mengering, dan rontok sehingga mengurangi hasil panen.',
+      name: 'Early Blight (Bercak Kering)',
+      description: 'Penyakit bercak kering (early blight) pada daun tanaman kentang disebabkan oleh jamur Alternaria Solani yang ditularkan melalui udara. Gejala awal bercak kering pada daun bagian bawah, berwarna cokelat berupa tanda khas lingkaran berpusat (seperti cincin) pada bercak tersebut, sporulasi tidak nampak seperti embun putih. (Sumber: Sholihah & Dijaya, 2019)',
     },
     {
-      name: 'Hawar Daun Lanjut',
-      description: 'Penyakit Late Blight disebabkan oleh oomycete Phytophthora infestans. Ciri-cirinya adalah munculnya bercak besar berwarna hijau gelap hingga cokelat kehitaman yang tampak basah (water-soaked) pada daun, batang, dan umbi. Pada kondisi lembap, sering terlihat pertumbuhan jamur putih seperti kapas di bagian bawah daun. Penyakit ini sangat agresif dan dapat menghancurkan seluruh tanaman dalam waktu singkat.',
+      name: 'Late Blight (Hawar Daun)',
+      description: 'Penyakit busuk daun (late blight) atau yang biasanya disebut dengan “hawar daun” pada daun tanaman kentang disebabkan oleh jamur Phytophthora Infestans yang ditularkan nelalui udara serta air. Gejala pada penyakit ini mempunyai bercak pada bagian tepi atau tengah. Serangan penyakit ini dapat menyebar ke tangkai, batang, dan umbi kentang. Serangan penyakit ini dapat berkembang dengan cepat dan mematikan seluruh daun jika hujan atau kelembaban yang cukup tinggi. (Sumber: Sholihah & Dijaya, 2019)',
     },
     {
       name: 'Sehat',
@@ -66,6 +66,7 @@
     status.textContent = 'Silahkan pilih gambar untuk klasifikasi';
     status.className = 'status ready';
     classifyBtn.disabled = false;
+    classifyBtn.classList.remove('is-loading');
   }
 
   function onFile(file) {
@@ -87,7 +88,8 @@
     }
 
     classifyBtn.disabled = true;
-    status.textContent = model ? 'Proses menganalisa...' : 'Memuat model...';
+    classifyBtn.classList.add('is-loading');
+    status.textContent = model ? 'Proses menganalisa' : 'Memproses gambar';
     status.className = 'status';
 
     await new Promise(r => setTimeout(r, 50));
@@ -120,17 +122,18 @@
       resultDescription.textContent = topClass.description;
       resultsDiv.hidden = false;
 
-      status.textContent = 'Model siap';
+      status.textContent = 'Pilih gambar lain untuk klasifikasi berikutnya';
       status.className = 'status ready';
     } catch (e) {
       console.error(e);
       status.textContent = 'Terjadi kesalahan saat klasifikasi';
       status.className = 'status error';
+    } finally {
+      classifyBtn.classList.remove('is-loading');
+      classifyBtn.disabled = false;
     }
-    classifyBtn.disabled = false;
   }
 
-  // Modal
   const openModal = () => { modalOverlay.hidden = false; };
   infoBtn.onclick = openModal;
   if (infoLabel) infoLabel.onclick = openModal;
@@ -139,7 +142,6 @@
     if (e.target === modalOverlay) modalOverlay.hidden = true;
   };
 
-  // Upload events
   dropZone.onclick = () => fileInput.click();
   fileInput.onchange = e => { if (e.target.files[0]) onFile(e.target.files[0]); };
   dropZone.ondragover = e => { e.preventDefault(); dropZone.classList.add('drag-over'); };
